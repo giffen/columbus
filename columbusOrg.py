@@ -1,6 +1,8 @@
 
 import os, csv
 
+graph = True
+
 def columbus():
 	filelist = []
 	num = 1000
@@ -31,10 +33,19 @@ def write_csv(data):
 	with open('summary_file.csv', 'wb') as fp:
 		a = csv.writer(fp, delimiter=',')
 		a.writerows(data)
+
+def graph_summary():
+	import os, pandas as pd, matplotlib.pyplot as plt
+	df = pd.read_csv('summary_file.csv')
+	p = df.plot(kind='box')
+	p.set_ylim(100,5000)
+	plt.show()
 											
 def main():
 	files, num = columbus()
 	summary_file = prismFile(files,num)
 	write_csv (zip(*summary_file))
+	if graph == True:
+		graph_summary()	
 
 main()
