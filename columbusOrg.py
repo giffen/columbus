@@ -17,7 +17,7 @@ def columbus():
 	filelist = []
 	for (dirpath, dirnames, filenames) in os.walk(path):
 		for f in  filenames:
-			if 'Selected' not in f and 'Population' in f:
+			if 'SG2' not in f and 'Population' in f:
 				filelist.append(f)
 	return filelist
 
@@ -57,12 +57,15 @@ def write_csv(data):
 	print ("\n\nFinished making a summary file! Check your folder for summary_file.csv")
 
 def graph_summary():
-	print ("\n\nMaking graph...")
-	import os, pandas as pd, matplotlib.pyplot as plt
-	df = pd.read_csv('summary_file.csv')
-	p = df.plot(kind='box')
-	p.set_ylim(100,15000)
-	plt.show()
+	try:
+		print ("\n\nMaking graph...")
+		import os, pandas as pd, matplotlib.pyplot as plt
+		df = pd.read_csv('summary_file.csv')
+		p = df.plot(kind='box')
+		p.set_ylim(100,15000)
+		plt.show()
+	except ImportError, e:
+		pass
 											
 def main():
 	files = columbus()
