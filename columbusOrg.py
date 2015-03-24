@@ -12,12 +12,11 @@ rows = int(raw_input("\nHow many rows would you like to include in your analysis
 
 mk_graph = raw_input("\nWould you like to make a graph? (Y/N) ")
 
-
 def columbus():
 	filelist = []
 	for (dirpath, dirnames, filenames) in os.walk(path):
 		for f in  filenames:
-			if 'SG2' not in f and 'Population' in f:
+			if '[0]' in f and 'Population' in f:
 				filelist.append(f)
 	return filelist
 
@@ -75,4 +74,5 @@ def main():
 	if mk_graph.upper() == 'Y':
 		graph_summary()	
 
-main()
+if __name__ == '__main__':
+	main()
