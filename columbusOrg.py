@@ -1,15 +1,11 @@
 
 import os, csv, re
 
-path= raw_input("Please enter the file path: ")
-if ' ' in path:
-	print "\nPlease remove any whitespaces from folder and filenames "
-	exit()
-
+p = raw_input("Please enter the file path: ")
+p = p.strip('"')
+path = r'%s'%(p)
 os.chdir(str(path))
-
 rows = int(raw_input("\nHow many rows would you like to include in your analysis? "))
-
 mk_graph = raw_input("\nWould you like to make a graph? (Y/N) ")
 
 def columbus():
