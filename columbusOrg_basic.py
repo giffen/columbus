@@ -5,7 +5,7 @@ def info():
 	p = raw_input("Please enter the file path: ")
 	p = p.strip('"')
 	path = r'%s'%(p)
-	rows = int(raw_input("\nHow many rows would you like to include in your analysis? "))
+	rows = raw_input("\nHow many rows would you like to include in your analysis? ")
 	search = raw_input("\nWhat population number would you like to use to make a summary file? ")
 	os.chdir(path)
 	return path,rows,search
@@ -45,15 +45,29 @@ def prismFile(files, header,rows):
 		headcount += 1			
 		for line in reader:
 			array = line.split(',')
-			content = array[8]					
-			if count < rows:				
-				data.append(content)
-				count += 1
-			max_count.append(count)
-	for l in container:
-		new_l = l + ['NA'] * (max(max_count) - len(l))
-		pad_container.append(new_l)
-	return pad_container
+			content = array[8]						
+			data.append(content)
+			count += 1
+		max_count.append(count)
+	if rows.upper() == 'MAX':
+		for l in container:
+			new_l = l + ['NA'] * (max(max_count) - len(l))
+			pad_container.append(new_l)
+		return pad_container
+	elif rows.upper() == 'MIN':
+		return container
+	
+	else:
+		rows = int(rows)
+		if min(max_count) < rows:
+			for l in container:
+				new_l = l + ['NA'] * (rows - min(max_count))				
+				pad_container.append(new_l)		
+		else:
+			for l in container:
+				new_l = l[:rows+1]
+				pad_container.append(new_l)
+		return pad_container	
 
 def write_csv(data):
 	with open('summary_file.csv', 'wb') as fp:
