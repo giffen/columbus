@@ -32,6 +32,8 @@ def headers(filelist):
 
 def prismFile(files, header,rows):
 	container = []
+	max_count = []
+	pad_container = []
 	headcount = 0
 	for f in files:
 		count = 0
@@ -43,11 +45,15 @@ def prismFile(files, header,rows):
 		headcount += 1			
 		for line in reader:
 			array = line.split(',')
-			content = array[8]			
+			content = array[8]					
 			if count < rows:				
 				data.append(content)
 				count += 1
-	return container
+			max_count.append(count)
+	for l in container:
+		new_l = l + ['NA'] * (max(max_count) - len(l))
+		pad_container.append(new_l)
+	return pad_container
 
 def write_csv(data):
 	with open('summary_file.csv', 'wb') as fp:
